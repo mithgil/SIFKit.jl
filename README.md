@@ -59,7 +59,7 @@ display(f) # wait(display(f)) if you use GLMakie and a pop-out window
 ```
 <img src="./test/neon_rows_138to150_after_x_calibration_3_makie.png" alt="Description" width="650"/>
 
-If you or your collaborators likes txt files better, then do
+If you or your collaborators like txt files better, then do
 
 ```julia
 
