@@ -1,7 +1,7 @@
 # SIFKit.jl 📦: A andor sif analysis tools in Julia
 
 
-[![CI](https://github.com/mithgil/SIFKit.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/mithgil/SIFKit.jl/actions/workflows/CI.yml)
+
 
 
 📦 **SIFKit.jl** is a Julia package for parsing Andor `.sif` camera files and providing tools for spectra analysis and data inspection.
