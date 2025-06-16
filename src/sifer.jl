@@ -268,7 +268,7 @@ function load(filename::String)
 
     m = match(r"([A-Za-z\s]+)(\d+ .*)", line) 
     text_part = m.captures[1] # "Pixel number"
-    numbers_part = m.captures[2] # The '?' makes the previous '+' non-greedy, ensuring it stops at the first digit
+    numbers_part = m.captures[2] 
     metadata["ImageAxis"] = strip(text_part) 
 
     numbers_parts = split(numbers_part)
