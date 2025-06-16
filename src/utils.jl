@@ -107,19 +107,20 @@ function Export2Txt(sif::SIFData, outputFilename::String = "_data.txt")
         println(io, "#") # Blank line for separation
 
 
-		wvs = retrieveCalibration(metaData)
-		waveLengths = retrieveCalibration(metaData)
-		axis_name = metaData["FrameAxis"] 
-		writedlm(io, [axis_name], ',')
-		
-		isRaman = metaData["FrameAxis"] == "Raman Shift"
-		if isRaman
-			RamanExcitation = sifImage.metadata["RamanExWavelength"]
-			RamanShift = sifer_utils.Wavelength2Raman.(RamanExcitation, waveLengths)
-		end
-		
-		writedlm(io, isRaman ? RamanShift : waveLengths, ',')
-		println(io, "---")
+	
+	waveLengths = retrieveCalibration(metaData)
+	axis_name = metaData["FrameAxis"] 
+	writedlm(io, [axis_name], ',')
+	
+	isRaman = metaData["FrameAxis"] == "Raman Shift"
+	if isRaman
+		RamanExcitation = sifImage.metadata["RamanExWavelength"]
+		RamanShift = sifer_utils.Wavelength2Raman.(RamanExcitation, waveLengths)
+	end
+	
+	writedlm(io, isRaman ? RamanShift : waveLengths, ',')
+	println(io, "---")
+	
         # column headers
         writedlm(io, [column_headers], ',') # [column_headers] wraps it into a 1-row matrix
 		
