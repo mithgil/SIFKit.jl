@@ -29,21 +29,31 @@ sifImage = load(test_siffile)
 
 waveLengths = SIFKit.retrieveCalibration(sifImage.metadata)
 
-isRaman = sifImage.metadata["FrameAxis"] == "Raman shift"
+
+
+xlabel = ""
 
 if isRaman
     RamanExcitation = sifImage.metadata["RamanExWavelength"]
-    RamanShift = sifer_utils.Wavelength2Raman.(RamanExcitation, waveLengths)
+    RamanShift = Wavelength2Raman.(RamanExcitation, waveLengths)
+    xlabel = rich("$(sifImage.metadata["FrameAxis"]) (cm", superscript("-1"), ")")
+else
+    xlabel = sifImage.metadata["FrameAxis"]*" (nm)"
 end
+    
 
 using CairoMakie
 
 f = Figure(size = (800,500), fontsize = 22)
-
+    
 ax = Axis(f[1,1], 
-            xlabel = sifImage.metadata["FrameAxis"]*" (nm)",
+            xlabel = xlabel,
             ylabel = "Counts",
-            xticks = 500:20:700)
+            xticks = isRaman ? (-400:400:2500) : (500:20:700),
+            xlabelsize = 28,
+            ylabelsize = 28,
+            xgridvisible = false,
+            ygridvisible = false)
 
 data = dropdims(sifImage.data, dims = (2,3)) # assume single frame
 
