@@ -131,64 +131,6 @@ function Export2Txt(sif::SIFData, outputFilename::String = "_data.txt")
     println("Data successfully exported to $filename.")
 end
 
-function Export2Txt(sif::SIFData, outputFilename::String = "_data.txt")
-
-    filename = outputFilename;
-    metaData = sif.metadata;
-    data_raw = sif.data # Original data (width, height, frames)
-    
-    local data_to_write # Declare data_to_write to be local
-    local num_output_rows
-    local num_output_cols
-
-    if size(data_raw, 2) == 1 # Height dimension is 1 (e.g., spectrum data)
-        data_to_write = dropdims(data_raw, dims = (2))
-        # After dropdims, data_to_write will be (width, frames) or (width,)
-        if ndims(data_to_write) == 1
-            # If it's a single spectrum, writedlm expects a 2D array, so make it a column vector
-            data_to_write = reshape(data_to_write, :, 1)
-        end
-        num_output_rows = size(data_to_write, 1)
-        num_output_cols = size(data_to_write, 2)
-
-    else # Height dimension is > 1 (e.g., image data)
-        # Reshape (width, height, frames) to (width * height, frames)
-        # This makes each column a frame, and each row a flattened (width*height) pixel location.
-        data_to_write = reshape(data_raw, size(data_raw, 1) * size(data_raw, 2), size(data_raw, 3))
-        num_output_rows = size(data_to_write, 1)
-        num_output_cols = size(data_to_write, 2)
-    end
-
-    # Each column now represents a frame
-    column_headers = ["Frame_$(i)" for i in 1:num_output_cols]
-
-    open(filename, "w") do io
-        
-        # Sort metadata keys for consistent output order
-        sorted_keys = sort(collect(keys(metaData))); 
-        println(io, "# ------ METADATA ------")
-
-        # Add derived dimensions to metadata for clarity
-        println(io, "# Original Dimensions: $(size(data_raw))")
-        println(io, "# Output Dimensions: ($(num_output_rows), $(num_output_cols))")
-        println(io, "# Output Format: Rows = Flattened Width*Height (or Width if Height=1), Columns = Frames")
-
-        for key in sorted_keys
-            value = metaData[key]
-            # Handle complex metadata values by converting to string if necessary
-            println(io, "# $key: $(string(value))")
-        end
-        println(io, "# ----------------------")
-        println(io, "#") # Blank line for separation
-
-        # column headers
-        writedlm(io, [column_headers], ',') # [column_headers] wraps it into a 1-row matrix
-        # actual data
-        writedlm(io, data_to_write, ',')
-    end
-
-    println("Data successfully exported to $filename.")
-end
 
 using Printf
 
