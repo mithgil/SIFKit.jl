@@ -71,7 +71,7 @@ display(f) # wait(display(f)) if you use GLMakie and a pop-out window
 
 # what a nice spectrum!
 ```
-<img src="./test/neon_rows_138to150_after_x_calibration_3_makie.png" alt="Description" width="650"/>
+<img src="./test/neon_rows_138to150_after_x_calibration_3_makie.png" alt="Description" width="750"/>
 
 If you or your collaborators like txt files better, then do
 
