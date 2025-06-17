@@ -29,7 +29,7 @@ sifImage = load(test_siffile)
 
 waveLengths = SIFKit.retrieveCalibration(sifImage.metadata)
 
-isRaman = sifImage.metadata["FrameAxis"] == "Raman Shift"
+isRaman = sifImage.metadata["FrameAxis"] == "Raman shift"
 
 if isRaman
     RamanExcitation = sifImage.metadata["RamanExWavelength"]
