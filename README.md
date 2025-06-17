@@ -23,15 +23,13 @@ In julia REPL, type
 ## 🚀 Usage
 
 ```julia
-using SIFKit
+sifImage = load(test_siffile)
+@show size(sifImage.data)      # (width, height, frames)
+@show sifImage.metadata["ExposureTime"]  # exposure time
 
-sif_data = load(test_path)
-@show size(sif_data.data)      # (width, height, frames)
-@show sif_data.metadata["ExposureTime"]  # exposure time
+waveLengths = SIFKit.retrieveCalibration(sifImage.metadata)
 
-waveLengths = sifer_utils.retrieveCalibration(sifImage.metadata)
-
-isRaman = sif_data.metadata["FrameAxis"] == "Raman Shift"
+isRaman = sifImage.metadata["FrameAxis"] == "Raman Shift"
 
 if isRaman
     RamanExcitation = sifImage.metadata["RamanExWavelength"]
