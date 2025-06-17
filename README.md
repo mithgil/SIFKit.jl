@@ -29,10 +29,16 @@ sifImage = load(test_siffile)
 
 waveLengths = SIFKit.retrieveCalibration(sifImage.metadata)
 
-
-
 xlabel = ""
 
+"""
+ for Imaging data,
+@show metadata["ImageAxis"]
+xlabel = metadata["ImageAxis"] == "Wavelength" ? "Wavelength (nm)" : "Pixels"
+and do heatmap
+hm = heatmap!(ax, imageData, colorrange = (635, 670))
+
+"""
 if isRaman
     RamanExcitation = sifImage.metadata["RamanExWavelength"]
     RamanShift = Wavelength2Raman.(RamanExcitation, waveLengths)
