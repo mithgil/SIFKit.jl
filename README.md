@@ -39,6 +39,11 @@ and do heatmap
 hm = heatmap!(ax, imageData, colorrange = (635, 670))
 
 """
+
+@show sifImage.metadata["FrameAxis"]
+isRaman = sifImage.metadata["FrameAxis"] == "Raman shift"
+
+
 if isRaman
     RamanExcitation = sifImage.metadata["RamanExWavelength"]
     RamanShift = Wavelength2Raman.(RamanExcitation, waveLengths)
