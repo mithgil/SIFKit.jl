@@ -11,7 +11,6 @@
 - Efficient `.sif` binary parsing
 - Easy access to image stacks, dimensions, metadata
 - Spectrum data extraction and analysis tools
-- Designed to support large datasets with minimal memory allocation
 
 ## 🧪 Installation
 
